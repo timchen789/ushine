@@ -403,3 +403,34 @@ and to hold the ng-app and ng-controller directives.
 Now we can use Angular directives to access data from form elements, 
 Next, we need to render a list of results in our view. 
 use Ajax requests and JSON responses from the server
+==========================================================================
+==================== new Clone to new clouse9 Workspace ==================
+======================= do following step first ==========================
+==========================================================================
+(1)vvvvv Set up prostres for my rails app "shine" on c9 as follows:vvvvvvv 
+(following http://stackoverflow.com/a/29379969/5521564219)
+How to setup PostgreSQL & Rails on Cloud9
+At time of writing, Cloud9 has PostgreSQL pre-installed, so you won't need to install it yourself. However, its not running by default, so you will need to start it with this command in the terminal:
+$ sudo service postgresql start
+Change the PostgreSQL password to 'password' (or choose a different password):
+$ sudo sudo -u postgres psql
+# This will open the psql client.
+# Type \password and press enter to begin process
+# of changing the password:
+postgres=# \password
+# Type your new password (e.g. "password") and press enter twice:
+Enter new password: 
+Enter it again: 
+# Password changed, quit psql with \q
+postgres=# \q 
+(2)you’ll need to create a user 
+Our user will be named shine and have the password shine. 
+We can create it using the command-line app installed with Postgres called createuser. 
+$ createuser --createdb --login -P shine 
+You’ll be prompted for a password, so enter shine twice.
+(3) 
+$ bundle install
+$ rake db:create
+$ rake db:migrate
+$ rake db:seed
+$ rails s -b $IP -p $PORT
