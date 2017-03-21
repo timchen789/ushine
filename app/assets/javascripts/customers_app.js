@@ -4,7 +4,15 @@
 // in $scope called customers. 
 // We’ll use keys that map the fields of our Active Record object 
 // —this will make it a snap to implement the back end later.
-var app = angular.module('customers',[]); 
+var app = angular.module(
+  'customers',
+  [
+    'ngRoute',
+    'templates'    
+  ]
+);
+// Now that we’ve installed angular-route, 
+// the next step is to use the router to configure a single route.
 // angular.Module has a function named controller that will register controller function. 
 app.controller("CustomerSearchController", [ 
 // Angular provides a service called $http used to make Ajax requests
@@ -42,5 +50,17 @@ app.controller("CustomerSearchController", [
       }
 // -----------------------------
     } 
+]);
+// To configure routes using angular-route, we need access to the object 
+// $routeProvider which configure the controller and template to use for 
+// a given URL. We can register this route using the when function.
+app.config([ 
+  "$routeProvider", 
+  function($routeProvider) {
+    $routeProvider.when("/", {
+      controller: "CustomerSearchController",
+      templateUrl: "customer_search.html"
+    });
+  } 
 ]);
 

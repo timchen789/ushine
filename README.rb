@@ -506,3 +506,120 @@ Randomized with seed 13816
 /usr/local/rvm/rubies/ruby-2.3.0/bin/ruby -I/usr/local/rvm/gems/ruby-2.3.0/gems/rspec-core-3.5.4/lib:/usr/local/rvm/gems/ruby-2.3.0/gems/rspec-support-3.5.0/lib /usr/local/rvm/gems/ruby-2.3.0/gems/rspec-core-3.5.4/exe/rspec --pattern spec/\*\*\{,/\*/\*\*\}/\*_spec.rb failed
 timchen7:~/ushine (master) $ 
 --------------------------skip testing ~page 116 ------------------------------
+======= p.117 Next: Level Up on Everything : build a complex customer detail view =====
+first, we need to turn our simple search screen into a single-page app (SPA) by 
+learning about Angular’s router and navigation services.
+---p. 119 CHAPTER 7 Create a Single-Page App Using Angular’s Router ---
+learn how to manage your Angular views in different templates—just like we do in Rails
+and have them play well with the asset pipeline.
+========= p.121 Using Angular’s Router for User Navigation =============
+Currently, our Angular app hard-codes both the view and the controller. 
+The view is hard-coded by virtue of having all the HTML inside 
+<articleng-app='customers'>. 
+The controller is hard-coded by the use of the ng-controller directive. 
+We’ll break that hard-coding with the router. 
+To accomplish this, we’ll do three things. 
+(A)First, we install the angular-route module, which provides the router itself. 
+(B)Next, we’ll configure it with a single route to match what we have now—
+a single slash (/) should render the customer search view. 
+(C)Finally, we’ll extract our existing view code into a standalone template, 
+which will require using a Rails plugin called angular-railstemplates to 
+help with asset pipeline integration.
+(1)
+$ sudo apt-get update
+$ sudo apt-get install nodejs
+$ sudo apt-get install npm
+$ npm install -g bower
+Edit login/install-bootstrap/shine/Gemfile 
+gem 'bower-rails
+$ bundle install   
+../shine/Bowerfile 
+  asset 'angular-route
+$ bundle exec rake bower:install  
+timchen7:~/ushine (master) $ bundle exec rake bower:install
+bower.js files generated
+/home/ubuntu/.nvm/versions/node/v4.7.3/bin/bower install -p 
+bower angular-route#*       not-cached https://github.com/angular/bower-angular-route.git#*
+bower angular-route#*          resolve https://github.com/angular/bower-angular-route.git#*
+bower angular-route#*         download https://github.com/angular/bower-angular-route/archive/v1.6.3.tar.gz
+bower angular-route#*          extract archive.tar.gz
+bower angular-route#*         resolved https://github.com/angular/bower-angular-route.git#1.6.3
+bower angular#1.6.3         not-cached https://github.com/angular/bower-angular.git#1.6.3
+bower angular#1.6.3            resolve https://github.com/angular/bower-angular.git#1.6.3
+bower angular#1.6.3           download https://github.com/angular/bower-angular/archive/v1.6.3.tar.gz
+bower angular#1.6.3            extract archive.tar.gz
+bower angular#1.6.3           resolved https://github.com/angular/bower-angular.git#1.6.3
+Please note that,
+    dsl-generated-dependencies depends on angular#~> 1.5 which resolved to angular#1.5.11
+    angular-route#1.6.3 depends on angular#1.6.3 which resolved to angular#1.6.3
+Resort to using angular#1.5 which resolved to angular#1.5.11
+Code incompatibilities may occur.
+bower angular-route#*          install angular-route#1.6.3
+angular-route#1.6.3 bower_components/angular-route
+└── angular#1.5.11
+(2)bring it into the asset pipeline by adding it to app/assets/javascripts/application.js.
+//= require angular-route
+(3)Angular app needs to explicitly bring the module in as a dependency
+Each Angular app, when declared, has a list of dependent modules. 
+If you recall, when we declared our app using angular.module, 
+the second argument was an empty array: var app = angular.module('customers',[]); 
+That argument is our app’s list of dependent modules
+Now, we’ll need to add angular-route to this array.
+var app = angular.module( 'customers', [ 'ngRoute'] ); 
+(4)Because the Rails route /customers caused the CustomersController to render 
+the index action, which, in turn, rendered app/views/customers/index.html.erb, 
+which contains the ng-app directive, all routes visible to the Angular app are 
+relative to /customers and thus our app’s route is /.
+====== p.123 Converting Our Existing View to an Angular Template ====
+(5)To configure routes using angular-route, we need access to the object 
+$routeProvider which configure the controller and template to use for 
+a given URL.We can register this route using the when function.
+shine/app/assets/javascripts/customers_app.js 
+app.config([ "$routeProvider", function($routeProvider) {$routeProvider.when()...}
+(6) The last step is to move our view template code out of app/views/customers/index.html.erb 
+and into the file specified in our routing config customer_search.html. 
+To do that, we need to know where that file goes, and how Angular will access it at runtime.
+This requires configuring the asset pipeline to serve Angular templates. 
+------- Serving Angular Templates from the Asset Pipeline --------
+most browsers won’t allow Angular to fetch the HTML file without configuring 
+the CDN server for cross-origin resource sharing (CORS). That can be complicated 
+to do and hard to debug. Instead, we’ll arrange for our templates to be compiled 
+into JavaScript, so they’ll be bundled in our application’s asset bundle, 
+the same as all our other JavaScript. We can do this with the Rails plugin 
+angular-rails-templates. 
+gem "angular-rails-templates" 
+gem "sprockets", "~> 2.0"
+$ bundle update 
+after making this change so that Bundler will update all dependent gems.
+$ bundle install
+(7)P.125: After we install it with bundle install, we’ll need to add it to 
+app/assets/javascripts/application.js. 
+//= require angular-rails-templates 
+//= require_tree ./templates
+assumes our HTML templates are in app/assets/javascripts/templates and 
+requires us to add that directory to our application’s JavaScripts bundle as well.
+(8)The JavaScript code included with angular-rails-templates is an Angular module 
+that our Angular app must depend on (much the way it had to depend on the router).
+The name of the included module is templates, so we need to modify our Angular app’s 
+dependencies like so
+var app = angular.module( 'customers', [ 'ngRoute', 'templates'] );
+(9)With that configuration, we can move all the markup inside the outermost 
+<article> tags into app/assets/javascripts/templates/customer_search.html. 
+We’ll also remove the use of ng-controller from app/views/customers/index.html.erb.
+Lastly, we need to add an HTML element there with the ng-view directive. 
+This allows Angular to know where to put the view. Ultimately, 
+app/views/customers/index.html.erb will look like this:
+<article ng-app="customers"> 
+  <div ng-view></div> 
+</article>
+(10)We’ll also need to remove the use of the Rails partials for the pagination 
+controls, since Rails partials won’t work inside Angular. We can do this by 
+simply inlining the markup, like so: 
+<section class="search-results" ng-if="customers.length > 0"> ...
+(11)With all that configuration out of the way, Shine should work the same way it 
+did before. We can verify this by running our test suite and verifying that 
+nothing has broken.
+$ bundle exec rake
+
+
+
