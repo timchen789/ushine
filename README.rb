@@ -473,3 +473,36 @@ timchen7:~/ushine (master) $ bundle exec rails g rspec:install
       create  spec/rails_helper.rb
 2. Executing our client-side code the same way a user’s browser would, 
 using Capybara, PhantomJS, Jasmine, and Poltergeist
+======== p.85 add nondefault configuration options to spec_helper.rb =====
+create a dummy spec file to verify everything’s working in spec/dummy_spec.rb.
+$ rake db:migrate RAILS_ENV=test
+$ rake
+-->see --------------------------------------------------------
+timchen7:~/ushine (master) $ rake
+/usr/local/rvm/rubies/ruby-2.3.0/bin/ruby -I/usr/local/rvm/gems/ruby-2.3.0/gems/rspec-core-3.5.4/lib:/usr/local/rvm/gems/ruby-2.3.0/gems/rspec-support-3.5.0/lib /usr/local/rvm/gems/ruby-2.3.0/gems/rspec-core-3.5.4/exe/rspec --pattern spec/\*\*\{,/\*/\*\*\}/\*_spec.rb
+Run options: include {:focus=>true}
+All examples were filtered out; ignoring {:focus=>true}
+Randomized with seed 13816
+testing that rspec is configured
+  can fail (FAILED - 1)
+  should pass
+Failures:
+  1) testing that rspec is configured can fail
+     Failure/Error: expect(false).to eq(true)
+       expected: true
+            got: false
+       (compared using ==)
+     # ./spec/dummy_spec.rb:7:in `block (2 levels) in <top (required)>'
+Top 2 slowest examples (0.09872 seconds, 97.8% of total time):
+  testing that rspec is configured can fail
+    0.097 seconds ./spec/dummy_spec.rb:6
+  testing that rspec is configured should pass
+    0.00172 seconds ./spec/dummy_spec.rb:3
+Finished in 0.10092 seconds (files took 9.92 seconds to load)
+2 examples, 1 failure
+Failed examples:
+rspec ./spec/dummy_spec.rb:6 # testing that rspec is configured can fail
+Randomized with seed 13816
+/usr/local/rvm/rubies/ruby-2.3.0/bin/ruby -I/usr/local/rvm/gems/ruby-2.3.0/gems/rspec-core-3.5.4/lib:/usr/local/rvm/gems/ruby-2.3.0/gems/rspec-support-3.5.0/lib /usr/local/rvm/gems/ruby-2.3.0/gems/rspec-core-3.5.4/exe/rspec --pattern spec/\*\*\{,/\*/\*\*\}/\*_spec.rb failed
+timchen7:~/ushine (master) $ 
+--------------------------skip testing ~page 116 ------------------------------
