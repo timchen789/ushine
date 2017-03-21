@@ -14,5 +14,10 @@ class CustomersController < ApplicationController
     else 
       @customers = [] 
     end 
+# Rails will handle converting our Customer instances into JSON    
+    respond_to do |format| 
+      format.html {} 
+      format.json { render json: @customers } 
+    end
   end 
 end

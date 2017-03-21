@@ -446,4 +446,9 @@ $ rails s -b $IP -p $PORT
 ==================== p.72 Rendering Canned Search Results ===============
 How to render collections with Angular ?
 p.74: Now when we click Find search results render on the page.
+============= p.74 Making an Ajax Request to Complete the Circle =======
+use Rails’s respond_to method to indicate that we handle JSON and 
+then use the json method to specify the JSON we want to return.
+p.76: If we start our server and navigate to http://localhost:3000/customers,
+we can now perform a search powered by Angular! 
 
