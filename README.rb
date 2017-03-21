@@ -454,3 +454,5 @@ we can now perform a search powered by Angular!
 ===== p.76 In Angular there are filters that work more like Unix pipes 
 than method calls. In this case, Angular provides a filter named 
 date that can be used inside the curly brackets in our templates
+====== p.77 Reimplementing the Pagination ======================
+Need to keep track of what page we are on, and use it in $http.get. 
