@@ -462,3 +462,14 @@ and not when the user clicks the Find Customers button.
 Just as we used ng-click to bind the click event on the button 
 to our search function, we can use the ngchange on the input field 
 to invoke search when the text field contents change. 
+======================= p.81 Next: Testing ====================
+1. Ruby RSpec testing using gem "rspec-rails"
+$ bundel install
+$ bundle exec rails g rspec:install 
+timchen7:~/ushine (master) $ bundle exec rails g rspec:install 
+      create  .rspec
+      create  spec
+      create  spec/spec_helper.rb
+      create  spec/rails_helper.rb
+2. Executing our client-side code the same way a user’s browser would, 
+using Capybara, PhantomJS, Jasmine, and Poltergeist
