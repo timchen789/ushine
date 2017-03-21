@@ -1,6 +1,15 @@
 Rails-Angular-Postgres-and-Bootstrap eBook
 https://s3-ap-southeast-1.amazonaws.com/mylekha-ebook/IT+%26+Programming/html_css_javascript/Rails-Angular-Postgres-and-Bootstrap.pdf
-
+Source Code for "Rails, Angular, Postgres, and Bootstrap" 
+https://pragprog.com/titles/dcbang/source_code
+Copyrights apply to this source code. 
+You may use the source code in your own projects, 
+however the source code may not be used to create training material, 
+courses, books, articles, and the like. 
+We make no guarantees that this source code is fit for any purpose. 
+Download dcbang-code.tgz 
+Download dcbang-code.zip 
+-------------- Let's get started --------------
 $ rails new --skip-turbolinks  --skip-spring  --skip-test-unit -d postgresql  shine
 vvvvv Set up prostres for my rails app "shine" on c9 as follows:vvvvvvvvvvvvvv 
 (following http://stackoverflow.com/a/29379969/5521564219)
@@ -434,3 +443,7 @@ $ rake db:create
 $ rake db:migrate
 $ rake db:seed
 $ rails s -b $IP -p $PORT
+==================== p.72 Rendering Canned Search Results ===============
+How to render collections with Angular ?
+p.74: Now when we click Find search results render on the page.
+
