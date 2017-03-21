@@ -456,3 +456,9 @@ than method calls. In this case, Angular provides a filter named
 date that can be used inside the curly brackets in our templates
 ====== p.77 Reimplementing the Pagination ======================
 Need to keep track of what page we are on, and use it in $http.get. 
+=======p.79 Changing Our Search to Use Typeahead ===============
+We need to arrange for search to be invoked when the user is typing 
+and not when the user clicks the Find Customers button. 
+Just as we used ng-click to bind the click event on the button 
+to our search function, we can use the ngchange on the input field 
+to invoke search when the text field contents change. 
