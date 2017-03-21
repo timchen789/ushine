@@ -451,4 +451,6 @@ use Rails’s respond_to method to indicate that we handle JSON and
 then use the json method to specify the JSON we want to return.
 p.76: If we start our server and navigate to http://localhost:3000/customers,
 we can now perform a search powered by Angular! 
-
+===== p.76 In Angular there are filters that work more like Unix pipes 
+than method calls. In this case, Angular provides a filter named 
+date that can be used inside the curly brackets in our templates

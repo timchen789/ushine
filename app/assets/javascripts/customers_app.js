@@ -8,7 +8,7 @@ var app = angular.module('customers',[]);
 // angular.Module has a function named controller that will register controller function. 
 app.controller("CustomerSearchController", [ 
 // Angular provides a service called $http used to make Ajax requests
-    "$scope", ,"$http",
+    "$scope","$http",
     function($scope,$http) {
 // ------------------------------------    
       // $scope.search = function(searchTerm) {
