@@ -620,6 +620,30 @@ simply inlining the markup, like so:
 did before. We can verify this by running our test suite and verifying that 
 nothing has broken.
 $ bundle exec rake
-
-
-
+============================= git clone to another c9.io workstation =======================
+!!!!!!! ERROR  #1 !!!!!!!!!!!!!
+http://stackoverflow.com/questions/28925848/error-with-postgresql-datababse-is-the-server-running-locally-and-accepting-co
+Q: psql: could not connect to server: 
+   No such file or directory Is the server running locally and accepting connections 
+   on Unix domain socket "/var/run/postgresql/.s.PGSQL.5432"?
+A: even though there is clearly a socket with this path available as reported by 
+   netstat -lp --protocol=unix | grep postgres
+   The problem can be solved by removing the lock file and restarting postgresql. 
+   This is definitely less invasive than a purge and re-install.
+   $ sudo rm /var/run/postgresql/.s.PGSQL.5432.lock 
+   $ sudo service postgresql restart
+!!!!!!! ERROR #2  !!!!!!!!!!!!!
+FATAL: password authentication failed for user "shine" FATAL: password authentication failed for user "shine"
+ you’ll need to create a user 
+ Our user will be named shine and have the password shine. 
+ We can create it using the command-line app installed with Postgres called createuser. 
+ $ createuser --createdb --login -P shine 
+ You’ll be prompted for a password, so enter "shine" twice.
+!!!!!!! ERROR #3 !!!!!!!!!!!!!
+ActiveRecord::NoDatabaseError
+FATAL: database "shine_development" does not exist
+timchen7:~/ushine (master) $ bundle exec rake db:drop
+timchen7:~/ushine (master) $ bundle exec rake db:create
+timchen7:~/ushine (master) $ bundle exec rake db:migrate
+timchen7:~/ushine (master) $ rails s -b $IP -p $PORT
+https://ror1-timchen7.c9users.io/customers WORKS!
