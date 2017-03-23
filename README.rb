@@ -647,3 +647,8 @@ timchen7:~/ushine (master) $ bundle exec rake db:create
 timchen7:~/ushine (master) $ bundle exec rake db:migrate
 timchen7:~/ushine (master) $ rails s -b $IP -p $PORT
 https://ror1-timchen7.c9users.io/customers WORKS!
+================== reconfig git global ======================
+$ git config --global user.name ....
+$ git config --global user.email ....
+$ git config --global credential.helper store
+
